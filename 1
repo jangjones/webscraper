@@ -1,0 +1,41 @@
+
+
+paste("http://stats.grok.se/json/en/",var,"/web_scraping",sep="")
+# Returns: "http://stats.grok.se/json/en/201401/web_scraping" [Note: no spaces]
+
+var=123
+paste("url",rep(var,3),sep="_")
+# Returns: "url_123" "url_123" "url_123"
+
+paste(rep("url",3),var,sep="_")
+# Returns: "url_123" "url_123" "url_123"
+
+var=c(123,421)
+paste(var,collapse="_")
+# Returns: "123_421"
+
+var="a"
+paste(rep(var),1:10,sep="")
+# Returns:  "a1"  "a2"  "a3"  "a4"  "a5"  "a6"  "a7"  "a8"  "a9"  "a10"
+
+# Fetching data
+var=201401
+url=paste("http://stats.grok.se/json/en/",var,"/web_scraping",sep="")
+raw.data <- readLines(url, warn="F") 
+raw.data
+
+# Fetching daily view data (json)
+require(rjson)
+rd  <- fromJSON(raw.data)
+rd
+rd.views <- rd$daily_views 
+rd.views
+rd.views <- unlist(rd.views)
+df <- as.data.frame(rd.views)
+df
+
+# Put it together
+rd <- fromJSON(readLines(url, warn="F"))
+rd.views <- rd$daily_views 
+df <- as.data.frame(unlist(rd.views))
+
