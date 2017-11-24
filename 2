@@ -1,0 +1,6 @@
+install.packages("tm")
+library("tm")
+
+text <- readLines("<filePath>")
+
+docs <- Corpus(VectorSource(text))
